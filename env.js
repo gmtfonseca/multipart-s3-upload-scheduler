@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 module.exports = { loadVars }
 
 function loadVars() {
@@ -7,6 +5,12 @@ function loadVars() {
 
   const buildError = (varName) => {
     return new Error(`Variável de ambiente inválida: ${varName}`)
+  }
+
+  if (!process.env.CRON_EXP) {
+    throw buildError('CRON_EXP')
+  } else {
+    vars.CRON_EXP = process.env.CRON_EXP
   }
 
   if (

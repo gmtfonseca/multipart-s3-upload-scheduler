@@ -1,0 +1,18 @@
+{
+  "apps": [
+    {
+      "name": "replic8",
+      "script": "index.js",
+      "env": {
+        "CRON_EXP": "30 11 ? * MON",
+        "FILES_PATH": "F:/Projetos/replic8-v2/outlook/book.pdf,F:/Projetos/replic8-v2/outlook/book2.pdf,F:/Projetos/replic8-v2/outlook/book3.pdf",
+        "PART_SIZE_MB": 10,
+        "QUEUE_SIZE": 4,
+        "S3_BUCKET_NAME": "fonseca-outlook-backup",
+        "AWS_ACCESS_KEY_ID": "AKIAXE6NIMY6GWPXDRVH",
+        "AWS_SECRET_ACCESS_KEY": "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"
+      },
+      "watch": false
+    }
+  ]
+}

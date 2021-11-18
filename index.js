@@ -1,10 +1,13 @@
+const schedule = require('node-schedule')
+
 const env = require('./env')
 const compressAndUploadToS3 = require('./compressAndUploadToS3')
 const logger = require('./logger')
 
-const { FILES_PATH, S3_BUCKET_NAME, PART_SIZE_MB, QUEUE_SIZE } = env.loadVars()
+const { CRON_EXP, FILES_PATH, S3_BUCKET_NAME, PART_SIZE_MB, QUEUE_SIZE } =
+  env.loadVars()
 
-async function main() {
+async function syncFiles() {
   for (const filePath of FILES_PATH) {
     try {
       logger.info(`Sincronizando arquivo ${filePath}.`)
@@ -24,4 +27,6 @@ async function main() {
   }
 }
 
-main()
+schedule.scheduleJob(CRON_EXP, () => {
+  syncFiles()
+})
