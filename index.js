@@ -1,45 +1,26 @@
 const env = require('./env')
-
-const compression = require('./compression')
-const s3 = require('./s3')
+const compressAndUploadToS3 = require('./compressAndUploadToS3')
 const logger = require('./logger')
 
-const {
-  FILES_PATH,
-  S3_BUCKET_NAME,
-  COMPRESSION_ENABLED,
-  PART_SIZE_MB,
-  QUEUE_SIZE,
-} = env.loadVars()
+const { FILES_PATH, S3_BUCKET_NAME, PART_SIZE_MB, QUEUE_SIZE } = env.loadVars()
 
 async function main() {
-  try {
-    let filesPath = FILES_PATH
-
-    console.log('Preparing to upload files: ' + filesPath)
-
-    if (COMPRESSION_ENABLED) {
-      console.log('Compressing')
-      filesPath = await compression.compressFiles(FILES_PATH)
-      console.log('Compression done.')
+  for (const filePath of FILES_PATH) {
+    try {
+      logger.info(`Sincronizando arquivo ${filePath}.`)
+      await compressAndUploadToS3({
+        filePath,
+        bucketName: S3_BUCKET_NAME,
+        filesPart: PART_SIZE_MB,
+        queueSize: QUEUE_SIZE,
+      })
+      logger.info(`Arquivo ${filePath} sincronizado com sucesso.`)
+    } catch (e) {
+      console.log(e)
+      logger.error(
+        `Não foi possível sincronizar o arquivo ${filePath}: ${e.message}`
+      )
     }
-
-    console.log('Uploading.')
-
-    await s3.uploadFiles({
-      filesPath,
-      bucketName: S3_BUCKET_NAME,
-      filesPart: PART_SIZE_MB,
-      queueSize: QUEUE_SIZE,
-    })
-
-    console.log('Upload done.')
-    logger.info(
-      `Upload realizado com sucesso para os arquivos: [${filesPath.join(', ')}]`
-    )
-  } catch (e) {
-    console.log(e)
-    logger.error(`Não foi possível sincronizar arquivo: ${e.message}`)
   }
 }
 

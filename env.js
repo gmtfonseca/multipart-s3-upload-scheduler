@@ -19,15 +19,6 @@ function loadVars() {
   }
 
   if (
-    !process.env.COMPRESSION_ENABLED ||
-    Number.isNaN(Number(process.env.COMPRESSION_ENABLED))
-  ) {
-    throw buildError('COMPRESSION_ENABLED')
-  } else {
-    vars.COMPRESSION_ENABLED = Number(process.env.COMPRESSION_ENABLED) === 1
-  }
-
-  if (
     !process.env.PART_SIZE_MB ||
     Number.isNaN(Number(process.env.PART_SIZE_MB))
   ) {

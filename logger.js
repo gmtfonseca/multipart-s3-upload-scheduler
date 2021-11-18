@@ -7,7 +7,7 @@ const LoggerLevels = Object.freeze({
 })
 
 class Logger {
-  constructor(dir) {
+  constructor({ dir }) {
     this.dir = dir
   }
 
@@ -33,4 +33,4 @@ class Logger {
   }
 }
 
-module.exports = new Logger(path.join(__dirname, 'logs'))
+module.exports = new Logger({ dir: path.join(__dirname, 'logs') })
