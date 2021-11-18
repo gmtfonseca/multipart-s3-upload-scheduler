@@ -20,8 +20,7 @@ async function uploadFiles({ filesPath, bucketName, partSizeMb, queueSize }) {
       queueSize,
     })
 
-    const promise = upload.promise()
-    await promise
+    await upload.promise()
   }
 }
 
