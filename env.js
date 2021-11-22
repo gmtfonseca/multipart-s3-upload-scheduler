@@ -1,7 +1,3 @@
-require('dotenv').config()
-
-module.exports = { loadVars }
-
 function loadVars() {
   const vars = {}
 
@@ -59,3 +55,5 @@ function loadVars() {
 
   return vars
 }
+
+module.exports = { loadVars }
