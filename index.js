@@ -1,10 +1,8 @@
-const schedule = require('node-schedule')
-
 const env = require('./env')
 const compressAndUploadToS3 = require('./compressAndUploadToS3')
 const logger = require('./logger')
 
-const { CRON_EXP, FILES_PATH, S3_BUCKET_NAME, PART_SIZE_MB, QUEUE_SIZE } =
+const { DAY_OF_WEEK, FILES_PATH, S3_BUCKET_NAME, PART_SIZE_MB, QUEUE_SIZE } =
   env.loadVars()
 
 async function syncFiles() {
@@ -27,6 +25,9 @@ async function syncFiles() {
   }
 }
 
-schedule.scheduleJob(CRON_EXP, () => {
+const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+const today = new Date()
+
+if (daysOfWeek[today.getDay()] === DAY_OF_WEEK) {
   syncFiles()
-})
+}

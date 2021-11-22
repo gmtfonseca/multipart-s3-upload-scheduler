@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 module.exports = { loadVars }
 
 function loadVars() {
@@ -7,10 +9,10 @@ function loadVars() {
     return new Error(`Variável de ambiente inválida: ${varName}`)
   }
 
-  if (!process.env.CRON_EXP) {
-    throw buildError('CRON_EXP')
+  if (!process.env.DAY_OF_WEEK) {
+    throw buildError('DAY_OF_WEEK')
   } else {
-    vars.CRON_EXP = process.env.CRON_EXP
+    vars.DAY_OF_WEEK = process.env.DAY_OF_WEEK
   }
 
   if (
