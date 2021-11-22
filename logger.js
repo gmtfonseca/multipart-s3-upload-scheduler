@@ -20,6 +20,8 @@ class Logger {
   }
 
   async append(data, level = LoggerLevels.INFO) {
+    console.log(data)
+
     const now = new Date()
     const fileName = `${now.getFullYear()}-${
       now.getMonth() + 1

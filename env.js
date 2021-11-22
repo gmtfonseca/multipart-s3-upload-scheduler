@@ -57,7 +57,5 @@ function loadVars() {
     vars.AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY
   }
 
-  console.log({ vars })
-
   return vars
 }
