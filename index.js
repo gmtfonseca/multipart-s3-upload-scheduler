@@ -47,7 +47,7 @@ const today = new Date()
 
 if (daysOfWeek[today.getDay()] === DAY_OF_WEEK) {
   console.log(
-    'FAZENDO BACKUP DO(S) ARQUIVO(S) DO OUTLOOK, NÃO FECHE ESTA JANELA.'
+    'FAZENDO BACKUP DO(S) ARQUIVO(S) DO OUTLOOK, NAO FECHE ESTA JANELA.'
   )
   syncFiles()
 }
