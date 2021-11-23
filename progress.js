@@ -7,15 +7,17 @@ class Progress {
   }
 
   save(filePath) {
-    let syncedFilesStr = filePath
+    const today = new Date().toLocaleDateString('pt-BR')
+    let newSyncedFiles = [filePath]
     if (fs.existsSync(this._path)) {
       const content = fs.readFileSync(this._path).toString('utf8')
-      const syncedFiles = content.split('#')[1]
-      syncedFilesStr = [...syncedFiles.split(','), filePath].join(',')
+      const [lastExecution, syncedFilesStr] = content.split('#')
+      const syncedFiles = syncedFilesStr.split(',')
+      if (lastExecution === today) {
+        newSyncedFiles = [...syncedFiles, filePath]
+      }
     }
-
-    const today = new Date().toLocaleDateString('pt-BR')
-    const content = `${today}#${syncedFilesStr}`
+    const content = `${today}#${newSyncedFiles.join(',')}`
     fs.writeFileSync(this._path, content)
   }
 
